@@ -8,7 +8,8 @@ import androidx.lifecycle.MutableLiveData
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.JsonArrayRequest
-import com.android.volley.toolbox.Volley
+import org.json.JSONArray
+import org.json.JSONObject
 
 class GunplaViewModel(application: Application) : AndroidViewModel(application) {
     companion object {
@@ -23,8 +24,8 @@ class GunplaViewModel(application: Application) : AndroidViewModel(application) 
         val model: String,
         val manufacturer: String,
         val armor: String,
-        val height: Float,
-        val weight: Float
+        val height: Double,
+        val weight: Double
     )
 
     val list = MutableLiveData<ArrayList<Mechanic>>()
@@ -44,8 +45,9 @@ class GunplaViewModel(application: Application) : AndroidViewModel(application) 
             url,
             null,
             {
-                Toast.makeText(getApplication(), it.toString(), Toast.LENGTH_LONG).show()
+                //Toast.makeText(getApplication(), it.toString(), Toast.LENGTH_LONG).show()
                 gunpla.clear()
+                parseMechanicJSON(it)
                 list.value = gunpla
             },
             {
@@ -64,5 +66,18 @@ class GunplaViewModel(application: Application) : AndroidViewModel(application) 
     override fun onCleared() {
         super.onCleared()
         mQueue.cancelAll(QUEUE_TAG)
+    }
+
+    private fun parseMechanicJSON(items: JSONArray) {
+        for (i in 0 until items.length()) {
+            val item: JSONObject = items.getJSONObject(i)
+            val id = item.getInt("id")
+            val name = item.getString("name")
+            val model = item.getString("model")
+            val height = item.getDouble("height")
+            val weight = item.getDouble("weight")
+
+            gunpla.add(Mechanic(id, name, model, "", "", height, weight))
+        }
     }
 }
