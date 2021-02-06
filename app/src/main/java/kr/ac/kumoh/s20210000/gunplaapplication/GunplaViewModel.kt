@@ -74,10 +74,13 @@ class GunplaViewModel(application: Application) : AndroidViewModel(application) 
             val id = item.getInt("id")
             val name = item.getString("name")
             val model = item.getString("model")
+            val manufacturer = item.getString("manufacturer")
+            val armor = item.getString("armor")
             val height = item.getDouble("height")
             val weight = item.getDouble("weight")
 
-            gunpla.add(Mechanic(id, name, model, "", "", height, weight))
+            gunpla.add(Mechanic(id, name, model, manufacturer, armor,
+                height, weight))
         }
     }
 }
