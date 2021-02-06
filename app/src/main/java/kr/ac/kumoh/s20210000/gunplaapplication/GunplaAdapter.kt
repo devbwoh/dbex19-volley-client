@@ -20,7 +20,6 @@ class GunplaAdapter(var model: GunplaViewModel
                 //onClick()
             }
         }
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -32,7 +31,7 @@ class GunplaAdapter(var model: GunplaViewModel
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.text.text = model.getGunpla(position).toString()
+        holder.text.text = model.getGunpla(position).model
     }
 
     override fun getItemCount(): Int {
