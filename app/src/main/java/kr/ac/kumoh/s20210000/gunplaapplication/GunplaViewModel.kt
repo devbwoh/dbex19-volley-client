@@ -45,7 +45,7 @@ class GunplaViewModel(application: Application) : AndroidViewModel(application) 
             url,
             null,
             {
-                //Toast.makeText(getApplication(), it.toString(), Toast.LENGTH_LONG).show()
+                Toast.makeText(getApplication(), it.toString(), Toast.LENGTH_LONG).show()
                 gunpla.clear()
                 parseMechanicJSON(it)
                 list.value = gunpla
