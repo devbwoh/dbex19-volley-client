@@ -1,19 +1,15 @@
 package kr.ac.kumoh.s20210000.gunplaapplication
 // package는 본인의 것 사용
 
+import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import kr.ac.kumoh.s20210000.gunplaapplication.databinding.ActivityMainBinding
+// package는 본인의 것 사용
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -26,7 +22,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        adapter = GunplaAdapter(model)
+        adapter = GunplaAdapter(model) { mechanic -> adapterOnClick(mechanic) }
         binding.list.apply {
             layoutManager = LinearLayoutManager(applicationContext)
             setHasFixedSize(true)
@@ -43,6 +39,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun adapterOnClick(mechanic: GunplaViewModel.Mechanic) {
-        Toast.makeText(this, mechanic.model, Toast.LENGTH_SHORT).show()
+        //Toast.makeText(this, mechanic.model, Toast.LENGTH_SHORT).show()
+        val uri = Uri.parse("https://www.youtube.com/results?search_query=${mechanic.model}")
+        val intent = Intent(Intent.ACTION_VIEW, uri)
+        startActivity(intent)
     }
 }

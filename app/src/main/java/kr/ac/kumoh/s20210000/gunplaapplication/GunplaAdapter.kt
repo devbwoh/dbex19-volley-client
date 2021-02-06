@@ -1,14 +1,16 @@
 package kr.ac.kumoh.s20210000.gunplaapplication
+// package는 본인의 것 사용
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class GunplaAdapter(var model: GunplaViewModel
-//,
-//    private val onClick: (GunplaViewModel.Mechanic) -> Unit
+class GunplaAdapter(
+    private val model: GunplaViewModel,
+    private val onClick: (GunplaViewModel.Mechanic) -> Unit
 ): RecyclerView.Adapter<GunplaAdapter.ViewHolder>() {
 
     inner class ViewHolder(itemView: View):
@@ -17,7 +19,7 @@ class GunplaAdapter(var model: GunplaViewModel
 
         init {
             itemView.setOnClickListener {
-                //onClick()
+                onClick(model.getGunpla(adapterPosition))
             }
         }
     }
@@ -31,7 +33,9 @@ class GunplaAdapter(var model: GunplaViewModel
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.text.text = model.getGunpla(position).model
+        val item = model.getGunpla(position)
+        val str = "${item.model} (${item.name})"
+        holder.text.text = str
     }
 
     override fun getItemCount(): Int {
